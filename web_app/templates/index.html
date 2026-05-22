@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Traffic Lens - Prédiction Intelligente du Trafic</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="nav-wrapper">
+          <div class="logo-section">
+            <div class="logo-container">
+              <img
+                src="{{ url_for('static', filename='images/logo.png') }}"
+                alt="Traffic Lens Logo"
+                class="logo-img"
+              />
+              <div class="logo-glow"></div>
+            </div>
+            <div class="logo-text">
+              <h1 class="brand">
+                TRAFFIC <span class="brand-highlight">LENS</span>
+              </h1>
+              <p class="tagline">
+                Intelligence Artificielle pour la Mobilité Urbaine
+              </p>
+            </div>
+          </div>
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Changer le thème"
+          >
+            <span class="theme-icon" id="themeIcon">
+              <i class="fas fa-sun"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-content">
+            <h2 class="hero-title">
+              Visionnez. Prévoyez. <span class="hero-accent">Circuluez.</span>
+            </h2>
+            <h3 class="hero-subtitle">
+              Traffic Lens analyse des points de données en temps réel pour
+              anticiper les flux de circulation
+            </h3>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <div class="stat-value">>95%</div>
+                <div class="stat-label">
+                  <i class="fas fa-bullseye"></i>
+                  Précision
+                </div>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <div class="stat-value">24h/24</div>
+                <div class="stat-label">
+                  <i class="fas fa-clock"></i>
+                  Surveillance
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Prediction Area -->
+        <div class="prediction-area">
+          <!-- Form -->
+          <div class="form-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-sliders-h"></i>
+                Configuration du Scénario
+              </h3>
+              <div class="card-subtitle">
+                Définissez les paramètres pour obtenir une prédiction précise
+              </div>
+            </div>
+
+            <form id="predictionForm">
+              <!-- Date & Heure -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="far fa-calendar-alt"></i>
+                    Date
+                  </label>
+                  <div class="input-container">
+                    <input type="date" id="date" required />
+                    <div class="input-border"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="far fa-clock"></i>
+                    Heure
+                  </label>
+                  <div class="input-container">
+                    <select id="hour" required></select>
+                    <div class="input-border"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Température -->
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-thermometer-half"></i>
+                  Température (°C)
+                </label>
+                <div class="input-container">
+                  <input
+                    type="number"
+                    id="temperature"
+                    min="-30"
+                    max="40"
+                    step="0.5"
+                    value="15"
+                    required
+                  />
+                  <div class="input-border"></div>
+                </div>
+              </div>
+
+              <!-- Météo -->
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-cloud-sun"></i>
+                  Condition météo
+                </label>
+                <div class="input-container">
+                  <select id="weather_main" required>
+                    <option value="Clear">
+                      <i class="fas fa-sun"></i> Dégagé
+                    </option>
+                    <option value="Clouds" selected>
+                      <i class="fas fa-cloud"></i> Nuageux
+                    </option>
+                    <option value="Rain">
+                      <i class="fas fa-cloud-rain"></i> Pluie
+                    </option>
+                    <option value="Snow">
+                      <i class="fas fa-snowflake"></i> Neige
+                    </option>
+                    <option value="Mist">
+                      <i class="fas fa-smog"></i> Brume
+                    </option>
+                    <option value="Fog">
+                      <i class="fas fa-cloud-fog"></i> Brouillard
+                    </option>
+                    <option value="Drizzle">
+                      <i class="fas fa-cloud-drizzle"></i> Bruine
+                    </option>
+                    <option value="Thunderstorm">
+                      <i class="fas fa-bolt"></i> Orage
+                    </option>
+                  </select>
+                  <div class="input-border"></div>
+                </div>
+              </div>
+
+              <!-- Nuages Slider -->
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-cloud"></i>
+                  Couverture nuageuse: <span id="cloudsValue">50</span>%
+                </label>
+                <div class="slider-container">
+                  <input
+                    type="range"
+                    id="clouds"
+                    min="0"
+                    max="100"
+                    value="50"
+                  />
+                  <div class="slider-track">
+                    <div class="slider-progress" id="cloudsProgress"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Checkboxes -->
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-exclamation-circle"></i>
+                  Conditions spéciales
+                </label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-card">
+                    <input type="checkbox" id="is_raining" />
+                    <div class="checkbox-content">
+                      <div class="checkbox-icon">
+                        <i class="fas fa-umbrella"></i>
+                      </div>
+                      <span class="checkbox-text">Pluie</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-card">
+                    <input type="checkbox" id="is_snowing" />
+                    <div class="checkbox-content">
+                      <div class="checkbox-icon">
+                        <i class="far fa-snowflake"></i>
+                      </div>
+                      <span class="checkbox-text">Neige</span>
+                    </div>
+                  </label>
+                  <label class="checkbox-card">
+                    <input type="checkbox" id="is_holiday" />
+                    <div class="checkbox-content">
+                      <div class="checkbox-icon">
+                        <i class="fas fa-calendar-day"></i>
+                      </div>
+                      <span class="checkbox-text">Jour férié</span>
+                      <div class="checkbox-hint"></div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn-primary" id="predictBtn">
+                <span class="btn-content">
+                  <i class="fas fa-brain"></i>
+                  <span class="btn-text">Analyser le trafic</span>
+                </span>
+                <span class="btn-loader"></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Results -->
+          <div class="results-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="fas fa-chart-line"></i>
+                Prédiction du Trafic
+              </h3>
+              <div class="card-subtitle">
+                Résultats en temps réel de notre modèle IA
+              </div>
+            </div>
+
+            <div id="results">
+              <div class="placeholder">
+                <div class="placeholder-icon">
+                  <div class="radar-animation">
+                    <div class="radar-circle"></div>
+                    <div class="radar-sweep"></div>
+                  </div>
+                </div>
+                <h4>En attente d'analyse</h4>
+                <p>
+                  Configurez les paramètres et lancez l'analyse pour obtenir une
+                  prédiction précise du trafic
+                </p>
+                <div class="placeholder-tip">
+                  <i class="fas fa-lightbulb"></i>
+                  <span
+                    >Notre IA utilise XGBoost pour des prédictions à haute
+                    précision</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <img
+              src="{{ url_for('static', filename='images/logo.png') }}"
+              alt="Traffic Lens"
+              class="footer-logo-img"
+            />
+            <div class="footer-text">
+              <div class="footer-brand">TRAFFIC LENS</div>
+              <div class="footer-tagline">
+                Intelligence pour la mobilité urbaine
+              </div>
+            </div>
+          </div>
+          <p class="copyright">
+            &copy; 2024 Traffic Lens. Tous droits réservés.<br />Propulsé par
+            XGBoost et Intelligence Artificielle
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
